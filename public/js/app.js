@@ -2160,6 +2160,7 @@ function (_super) {
     _this.loadEnquetes = _this.loadEnquetes.bind(_this);
     _this.onVoted = _this.onVoted.bind(_this);
     _this.onDelete = _this.onDelete.bind(_this);
+    _this.onEdited = _this.onEdited.bind(_this);
     return _this;
   }
 
@@ -2193,6 +2194,10 @@ function (_super) {
     this.loadEnquetes();
   };
 
+  App.prototype.onEdited = function () {
+    this.loadEnquetes();
+  };
+
   App.prototype.render = function () {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Card__WEBPACK_IMPORTED_MODULE_3__["default"], {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
@@ -2203,7 +2208,8 @@ function (_super) {
         enquetes: this.state.enquetes,
         loading: this.state.loading,
         onVoted: this.onVoted,
-        onDelete: this.onDelete
+        onDelete: this.onDelete,
+        onEdited: this.onEdited
       }, void 0)]
     }, void 0);
   };
@@ -2457,10 +2463,10 @@ function (_super) {
 
 /***/ }),
 
-/***/ "./resources/js/components/EnqueteItem.tsx":
-/*!*************************************************!*\
-  !*** ./resources/js/components/EnqueteItem.tsx ***!
-  \*************************************************/
+/***/ "./resources/js/components/EditButton.tsx":
+/*!************************************************!*\
+  !*** ./resources/js/components/EditButton.tsx ***!
+  \************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -2469,12 +2475,97 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _DeleteButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteButton */ "./resources/js/components/DeleteButton.tsx");
-/* harmony import */ var _RespostasList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RespostasList */ "./resources/js/components/RespostasList.tsx");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils */ "./resources/js/components/utils.ts");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+
+
+var EditButton =
+/** @class */
+function (_super) {
+  __extends(EditButton, _super);
+
+  function EditButton(props) {
+    return _super.call(this, props) || this;
+  }
+
+  EditButton.prototype.render = function () {
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", __assign({
+      className: "p-2 text-sm text-gray-400 hover:bg-gray-100 rounded",
+      onClick: this.props.onEdit
+    }, {
+      children: "Editar"
+    }), void 0);
+  };
+
+  return EditButton;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditButton);
+
+/***/ }),
+
+/***/ "./resources/js/components/EditEnqueteForm.tsx":
+/*!*****************************************************!*\
+  !*** ./resources/js/components/EditEnqueteForm.tsx ***!
+  \*****************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _CsrfInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CsrfInput */ "./resources/js/components/CsrfInput.tsx");
+/* harmony import */ var _LabeledInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LabeledInput */ "./resources/js/components/LabeledInput.tsx");
+/* harmony import */ var _FancyButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FancyButton */ "./resources/js/components/FancyButton.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -2526,6 +2617,360 @@ var __assign = undefined && undefined.__assign || function () {
 
 
 
+var EditEnqueteForm =
+/** @class */
+function (_super) {
+  __extends(EditEnqueteForm, _super);
+
+  function EditEnqueteForm(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.tituloRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createRef)();
+    _this.inicioRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createRef)();
+    _this.fimRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createRef)();
+    _this.tokenRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createRef)();
+    _this.state = {
+      loading: false,
+      titulo: _this.props.enquete.titulo,
+      inicio: _this.props.enquete.inicio.replace(/(\d{4})\-(\d{2})\-(\d{2})([a-zA-Z0-9\:\.]*)/i, '$1-$2-$3'),
+      fim: _this.props.enquete.fim.replace(/(\d{4})\-(\d{2})\-(\d{2})([a-zA-Z0-9\:\.]*)/i, '$1-$2-$3')
+    };
+    _this.onClickHandler = _this.onClickHandler.bind(_this);
+    _this.reset = _this.reset.bind(_this);
+    return _this;
+  }
+
+  EditEnqueteForm.prototype.reset = function () {
+    this.setState({
+      loading: false,
+      titulo: '',
+      inicio: '',
+      fim: ''
+    });
+  };
+
+  EditEnqueteForm.prototype.onClickHandler = function (event) {
+    var _this = this;
+
+    var _a, _b, _c, _d;
+
+    var data = {
+      id: this.props.enquete.id,
+      titulo: (_a = this.tituloRef.current) === null || _a === void 0 ? void 0 : _a.value,
+      inicio: (_b = this.inicioRef.current) === null || _b === void 0 ? void 0 : _b.value,
+      fim: (_c = this.fimRef.current) === null || _c === void 0 ? void 0 : _c.value,
+      _token: (_d = this.tokenRef.current) === null || _d === void 0 ? void 0 : _d.value
+    };
+    event.preventDefault();
+    this.setState(__assign(__assign({}, this.state), {
+      loading: true
+    }));
+    axios__WEBPACK_IMPORTED_MODULE_5___default().patch('/enquetes/update', data).then(function (response) {
+      if (response.data.data) {
+        _this.reset();
+
+        _this.props.onEdited();
+      }
+    })["catch"](function (error) {
+      return console.log(error.response);
+    });
+  };
+
+  EditEnqueteForm.prototype.render = function () {
+    var _this = this;
+
+    var inputClassNames = "py-2 px-4 rounded border border-gray-400 border-solid";
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", __assign({
+      className: "p-4"
+    }, {
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CsrfInput__WEBPACK_IMPORTED_MODULE_2__.CsrfInput, {
+        innerRef: this.tokenRef
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LabeledInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        type: 'text',
+        name: 'titulo',
+        title: "T\xEDtulo da Enquete",
+        placeholder: "Digite aqui o t\xEDtulo",
+        innerRef: this.tituloRef,
+        value: this.state.titulo,
+        className: inputClassNames,
+        onChange: function onChange(e) {
+          return _this.setState(__assign(__assign({}, _this.state), {
+            titulo: e.target.value
+          }));
+        }
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LabeledInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        type: 'date',
+        name: 'inicio',
+        title: 'Data Inicial',
+        innerRef: this.inicioRef,
+        value: this.state.inicio,
+        className: inputClassNames,
+        onChange: function onChange(e) {
+          return _this.setState(__assign(__assign({}, _this.state), {
+            inicio: e.target.value
+          }));
+        }
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LabeledInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        type: 'date',
+        name: 'fim',
+        title: 'Data Final',
+        innerRef: this.fimRef,
+        value: this.state.fim,
+        className: inputClassNames,
+        onChange: function onChange(e) {
+          return _this.setState(__assign(__assign({}, _this.state), {
+            fim: e.target.value
+          }));
+        }
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_FancyButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        type: 'submit',
+        onClick: this.onClickHandler,
+        loading: this.state.loading,
+        value: 'Criar Enquete'
+      }, void 0)]
+    }), void 0);
+  };
+
+  return EditEnqueteForm;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditEnqueteForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/EditRespostaForm.tsx":
+/*!******************************************************!*\
+  !*** ./resources/js/components/EditRespostaForm.tsx ***!
+  \******************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _CsrfInput__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./CsrfInput */ "./resources/js/components/CsrfInput.tsx");
+/* harmony import */ var _LabeledInput__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./LabeledInput */ "./resources/js/components/LabeledInput.tsx");
+/* harmony import */ var _FancyButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FancyButton */ "./resources/js/components/FancyButton.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_5__);
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+
+
+
+
+
+
+var EditRespotstaForm =
+/** @class */
+function (_super) {
+  __extends(EditRespotstaForm, _super);
+
+  function EditRespotstaForm(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.tituloRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createRef)();
+    _this.tokenRef = /*#__PURE__*/(0,react__WEBPACK_IMPORTED_MODULE_1__.createRef)();
+    _this.state = {
+      loading: false,
+      titulo: _this.props.respostaTitulo
+    };
+    _this.onClickHandler = _this.onClickHandler.bind(_this);
+    _this.reset = _this.reset.bind(_this);
+    return _this;
+  }
+
+  EditRespotstaForm.prototype.reset = function () {
+    this.setState(__assign(__assign({}, this.state), {
+      loading: false,
+      titulo: ''
+    }));
+  };
+
+  EditRespotstaForm.prototype.onClickHandler = function (event) {
+    var _this = this;
+
+    var _a, _b;
+
+    var data = {
+      id: this.props.respostaId,
+      titulo: (_a = this.tituloRef.current) === null || _a === void 0 ? void 0 : _a.value,
+      _token: (_b = this.tokenRef.current) === null || _b === void 0 ? void 0 : _b.value
+    };
+    event.preventDefault();
+    this.setState(__assign(__assign({}, this.state), {
+      loading: true
+    }));
+    axios__WEBPACK_IMPORTED_MODULE_5___default().patch('/respostas/update', data).then(function (response) {
+      if (response.data.data) {
+        _this.reset();
+
+        _this.props.onEdited();
+      }
+    })["catch"](function (error) {
+      return console.log(error.response);
+    });
+  };
+
+  EditRespotstaForm.prototype.render = function () {
+    var _this = this;
+
+    var inputClassNames = "py-2 px-4 rounded border border-gray-400 border-solid";
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", __assign({
+      className: "p-4"
+    }, {
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_CsrfInput__WEBPACK_IMPORTED_MODULE_2__.CsrfInput, {
+        innerRef: this.tokenRef
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_LabeledInput__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        type: 'text',
+        name: 'titulo',
+        title: "T\xEDtulo da Enquete",
+        placeholder: "Digite aqui o t\xEDtulo",
+        innerRef: this.tituloRef,
+        value: this.state.titulo,
+        className: inputClassNames,
+        onChange: function onChange(e) {
+          return _this.setState(__assign(__assign({}, _this.state), {
+            titulo: e.target.value
+          }));
+        }
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_FancyButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        type: 'submit',
+        onClick: this.onClickHandler,
+        loading: this.state.loading,
+        value: 'Criar Enquete'
+      }, void 0)]
+    }), void 0);
+  };
+
+  return EditRespotstaForm;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EditRespotstaForm);
+
+/***/ }),
+
+/***/ "./resources/js/components/EnqueteItem.tsx":
+/*!*************************************************!*\
+  !*** ./resources/js/components/EnqueteItem.tsx ***!
+  \*************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _DeleteButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteButton */ "./resources/js/components/DeleteButton.tsx");
+/* harmony import */ var _EditButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./EditButton */ "./resources/js/components/EditButton.tsx");
+/* harmony import */ var _EditEnqueteForm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EditEnqueteForm */ "./resources/js/components/EditEnqueteForm.tsx");
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/Modal.tsx");
+/* harmony import */ var _RespostasList__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./RespostasList */ "./resources/js/components/RespostasList.tsx");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./utils */ "./resources/js/components/utils.ts");
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+
+
+
+
+
+
+
+
+
 var EnqueteItem =
 /** @class */
 function (_super) {
@@ -2535,9 +2980,12 @@ function (_super) {
     var _this = _super.call(this, props) || this;
 
     _this.state = {
-      expanded: false
+      expanded: false,
+      show: false
     };
     _this.onClickHandler = _this.onClickHandler.bind(_this);
+    _this.onEditarClickedHandler = _this.onEditarClickedHandler.bind(_this);
+    _this.onRequestClose = _this.onRequestClose.bind(_this);
     return _this;
   }
 
@@ -2561,11 +3009,31 @@ function (_super) {
     };
   };
 
+  EnqueteItem.prototype.onEditarClickedHandler = function (e) {
+    this.setState(__assign(__assign({}, this.state), {
+      show: true
+    }));
+  };
+
+  EnqueteItem.prototype.onRequestClose = function () {
+    this.setState(__assign(__assign({}, this.state), {
+      show: false
+    }));
+  };
+
   EnqueteItem.prototype.render = function () {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", __assign({
       className: "flex flex-col p-2 hover:bg-white"
     }, {
-      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_6__["default"], __assign({
+        show: this.state.show,
+        onRequestClose: this.onRequestClose
+      }, {
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EditEnqueteForm__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          enquete: this.props.enquete,
+          onEdited: this.props.onEdited
+        }, void 0)
+      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
         className: "flex flex-row justify-center items-center transition-all hover:scale-110 transform gap-4",
         role: 'button'
       }, {
@@ -2584,23 +3052,25 @@ function (_super) {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
                 children: "Inicia em: "
               }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                children: (0,_utils__WEBPACK_IMPORTED_MODULE_5__.dateMask)(this.props.enquete.inicio)
+                children: (0,_utils__WEBPACK_IMPORTED_MODULE_8__.dateMask)(this.props.enquete.inicio)
               }, void 0)]
             }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
               children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
                 children: "Termina em: "
               }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-                children: (0,_utils__WEBPACK_IMPORTED_MODULE_5__.dateMask)(this.props.enquete.fim)
+                children: (0,_utils__WEBPACK_IMPORTED_MODULE_8__.dateMask)(this.props.enquete.fim)
               }, void 0)]
             }, void 0)]
           }), void 0)]
         }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_DeleteButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
           onDelete: this.onDeleteClickHandler(this.props.enquete.id)
+        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EditButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          onEdit: this.onEditarClickedHandler
         }, void 0)]
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
         className: "transition-all overflow-hidden flex flex-col ".concat(this.state.expanded ? 'h-auto py-4' : 'h-0 p-0')
       }, {
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RespostasList__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RespostasList__WEBPACK_IMPORTED_MODULE_7__["default"], {
           enqueteId: this.props.enquete.id
         }, void 0)
       }), void 0)]
@@ -2695,7 +3165,8 @@ function (_super) {
         return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EnqueteItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
           enquete: enquete,
           onVoted: _this.props.onVoted,
-          onDelete: _this.props.onDelete
+          onDelete: _this.props.onDelete,
+          onEdited: _this.props.onEdited
         }, enquete.id);
       }) : 'Nenhuma enquete cadastrada...'
     }), void 0);
@@ -2904,6 +3375,105 @@ function (_super) {
 }(react__WEBPACK_IMPORTED_MODULE_1__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (LabeledInput);
+
+/***/ }),
+
+/***/ "./resources/js/components/Modal.tsx":
+/*!*******************************************!*\
+  !*** ./resources/js/components/Modal.tsx ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+
+
+var Modal =
+/** @class */
+function (_super) {
+  __extends(Modal, _super);
+
+  function Modal(props) {
+    return _super.call(this, props) || this;
+  }
+
+  Modal.prototype.render = function () {
+    var _this = this;
+
+    return this.props.show ? (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
+      className: "fixed top-0 left-0 flex justify-center items-center",
+      style: {
+        width: '100vw',
+        height: '100vh',
+        backgroundColor: 'rgba(0, 0, 0, .2)',
+        zIndex: '10000'
+      },
+      onClick: function onClick(e) {
+        if (e.target === e.currentTarget) _this.props.onRequestClose();
+      }
+    }, {
+      children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
+        className: "bg-white"
+      }, {
+        children: this.props.children
+      }), void 0)
+    }), void 0) : (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {}, void 0);
+  };
+
+  return Modal;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Modal);
 
 /***/ }),
 
@@ -3144,6 +3714,162 @@ function (_super) {
 
 /***/ }),
 
+/***/ "./resources/js/components/RespostaItem.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/RespostaItem.tsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _Modal__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Modal */ "./resources/js/components/Modal.tsx");
+/* harmony import */ var _EditRespostaForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./EditRespostaForm */ "./resources/js/components/EditRespostaForm.tsx");
+/* harmony import */ var _DeleteButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./DeleteButton */ "./resources/js/components/DeleteButton.tsx");
+/* harmony import */ var _EditButton__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./EditButton */ "./resources/js/components/EditButton.tsx");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_6__);
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+
+
+
+
+
+
+
+var RespostaItem =
+/** @class */
+function (_super) {
+  __extends(RespostaItem, _super);
+
+  function RespostaItem(props) {
+    var _this = _super.call(this, props) || this;
+
+    _this.state = {
+      editing: false
+    };
+    _this.onEditarClickHandler = _this.onEditarClickHandler.bind(_this);
+    _this.onExcluirClickHandler = _this.onExcluirClickHandler.bind(_this);
+    _this.onClickHandler = _this.onClickHandler.bind(_this);
+    return _this;
+  }
+
+  RespostaItem.prototype.onEditarClickHandler = function (e) {
+    this.setState(__assign(__assign({}, this.state), {
+      editing: true
+    }));
+  };
+
+  RespostaItem.prototype.onExcluirClickHandler = function () {
+    var _this = this;
+
+    axios__WEBPACK_IMPORTED_MODULE_6___default()["delete"]('/respostas/delete/' + this.props.resposta.id).then(function (response) {
+      if (response.data.data) {
+        _this.props.onExtecuted();
+      }
+    });
+  };
+
+  RespostaItem.prototype.onClickHandler = function (event) {
+    var _this = this;
+
+    event.preventDefault();
+    axios__WEBPACK_IMPORTED_MODULE_6___default().patch('/respostas/vote', {
+      resposta: this.props.resposta.id
+    }).then(function (response) {
+      if (response.data.data) {
+        _this.props.onExtecuted();
+      }
+    });
+  };
+
+  RespostaItem.prototype.render = function () {
+    var _this = this;
+
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
+      className: "flex flex-row"
+    }, {
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_Modal__WEBPACK_IMPORTED_MODULE_2__["default"], __assign({
+        show: this.state.editing,
+        onRequestClose: function onRequestClose() {
+          return _this.setState(__assign(__assign({}, _this.state), {
+            editing: false
+          }));
+        }
+      }, {
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EditRespostaForm__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          respostaId: this.props.resposta.id,
+          respostaTitulo: this.props.resposta.titulo,
+          onEdited: this.props.onExtecuted
+        }, void 0)
+      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", __assign({
+        className: "cursor-pointer hover:bg-gray-100 py-2 flex-grow rounded",
+        onClick: this.onClickHandler
+      }, {
+        children: [this.props.resposta.id, ". ", this.props.resposta.titulo, " - ", this.props.resposta.votos, " voto(s)."]
+      }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_DeleteButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        onDelete: this.onExcluirClickHandler
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EditButton__WEBPACK_IMPORTED_MODULE_5__["default"], {
+        onEdit: this.onEditarClickHandler
+      }, void 0)]
+    }), void 0);
+  };
+
+  return RespostaItem;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (RespostaItem);
+
+/***/ }),
+
 /***/ "./resources/js/components/RespostasList.tsx":
 /*!***************************************************!*\
   !*** ./resources/js/components/RespostasList.tsx ***!
@@ -3159,8 +3885,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _DeleteButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteButton */ "./resources/js/components/DeleteButton.tsx");
-/* harmony import */ var _FancyButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FancyButton */ "./resources/js/components/FancyButton.tsx");
+/* harmony import */ var _FancyButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FancyButton */ "./resources/js/components/FancyButton.tsx");
+/* harmony import */ var _RespostaItem__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RespostaItem */ "./resources/js/components/RespostaItem.tsx");
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -3223,11 +3949,13 @@ function (_super) {
     _this.state = {
       respostas: [],
       loading: false,
-      adicional: ''
+      adicional: '',
+      editing: false
     };
     _this.loadRespostas = _this.loadRespostas.bind(_this);
-    _this.onClickHandler = _this.onClickHandler.bind(_this);
     _this.onAdicionarClickHandler = _this.onAdicionarClickHandler.bind(_this);
+    _this.onEditarClickHandler = _this.onEditarClickHandler.bind(_this);
+    _this.onExecutedHandler = _this.onExecutedHandler.bind(_this);
     return _this;
   }
 
@@ -3247,21 +3975,6 @@ function (_super) {
 
   RespostasList.prototype.componentDidMount = function () {
     this.loadRespostas();
-  };
-
-  RespostasList.prototype.onClickHandler = function (id) {
-    var _this = this;
-
-    return function (event) {
-      event.preventDefault();
-      axios__WEBPACK_IMPORTED_MODULE_1___default().patch('/respostas/vote', {
-        resposta: id
-      }).then(function (response) {
-        if (response.data.data) {
-          _this.loadRespostas();
-        }
-      });
-    };
   };
 
   RespostasList.prototype.onAdicionarClickHandler = function (event) {
@@ -3284,16 +3997,14 @@ function (_super) {
     });
   };
 
-  RespostasList.prototype.onExcluirClickHandler = function (id) {
-    var _this = this;
+  RespostasList.prototype.onEditarClickHandler = function (e) {
+    this.setState(__assign(__assign({}, this.state), {
+      editing: true
+    }));
+  };
 
-    return function () {
-      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/respostas/delete/' + id).then(function (response) {
-        if (response.data.data) {
-          _this.loadRespostas();
-        }
-      });
-    };
+  RespostasList.prototype.onExecutedHandler = function () {
+    this.loadRespostas();
   };
 
   RespostasList.prototype.render = function () {
@@ -3301,18 +4012,10 @@ function (_super) {
 
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
       children: [this.state.loading ? 'Carregando...' : this.state.respostas.length === 0 ? 'Não há respostas para essa enquete...' : this.state.respostas.map(function (resposta) {
-        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
-          className: "flex flex-row"
-        }, {
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("button", __assign({
-            className: "cursor-pointer hover:bg-gray-100 py-2 flex-grow rounded",
-            onClick: _this.onClickHandler(resposta.id)
-          }, {
-            children: [resposta.id, ". ", resposta.titulo, " - ", resposta.votos, " voto(s)."]
-          }), resposta.id), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_DeleteButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
-            onDelete: _this.onExcluirClickHandler(resposta.id)
-          }, void 0)]
-        }), void 0);
+        return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RespostaItem__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          resposta: resposta,
+          onExtecuted: _this.onExecutedHandler
+        }, resposta.id);
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", __assign({
         className: "flex flex-row justify-center items-center"
       }, {
@@ -3328,7 +4031,7 @@ function (_super) {
               adicional: e.target.value
             }));
           }
-        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_FancyButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_FancyButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
           type: "submit",
           value: "+ Resposta",
           onClick: this.onAdicionarClickHandler,

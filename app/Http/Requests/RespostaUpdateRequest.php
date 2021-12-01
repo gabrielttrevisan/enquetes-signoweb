@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class EnqueteUpdateRequest extends FormRequest
+class RespostaUpdateRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,8 +26,6 @@ class EnqueteUpdateRequest extends FormRequest
         return [
             'id' => [ 'required' ],
             'titulo' => [ 'string', 'max:150' ],
-            'inicio' => [ 'date' ],
-            'fim' => [ 'date' ],
         ];
     }
 }

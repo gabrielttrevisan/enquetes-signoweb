@@ -1,8 +1,12 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosResponse } from "axios"
 import { Component, ReactNode, MouseEvent, createRef } from "react"
-import DeleteButton from "./DeleteButton";
-import { Resposta } from "./Enquete";
-import FancyButton from "./FancyButton";
+import DeleteButton from "./DeleteButton"
+import EditButton from "./EditButton"
+import EditRespotstaForm from "./EditRespostaForm"
+import { Resposta } from "./Enquete"
+import FancyButton from "./FancyButton"
+import Modal from "./Modal"
+import RespostaItem from "./RespostaItem"
 
 interface RespostasListProps {
     enqueteId: number
@@ -12,6 +16,7 @@ interface RespostasListState {
     respostas: Resposta[]
     loading: boolean
     adicional: string
+    editing: boolean
 }
 
 export default class RespostasList extends Component<RespostasListProps, RespostasListState> {
@@ -23,10 +28,12 @@ export default class RespostasList extends Component<RespostasListProps, Respost
             respostas: [],
             loading: false,
             adicional: '',
+            editing: false,
         }
         this.loadRespostas = this.loadRespostas.bind(this)
-        this.onClickHandler = this.onClickHandler.bind(this)
         this.onAdicionarClickHandler = this.onAdicionarClickHandler.bind(this)
+        this.onEditarClickHandler = this.onEditarClickHandler.bind(this)
+        this.onExecutedHandler = this.onExecutedHandler.bind(this)
     }
 
     loadRespostas() {
@@ -41,19 +48,6 @@ export default class RespostasList extends Component<RespostasListProps, Respost
 
     componentDidMount() {
         this.loadRespostas()
-    }
-
-    onClickHandler(id: number) {
-        return (event: MouseEvent<HTMLButtonElement>) => {
-            event.preventDefault();
-            axios.patch('/respostas/vote', {
-                resposta: id
-            }).then((response: AxiosResponse<{ data: boolean }>) => {
-                if (response.data.data) {
-                    this.loadRespostas()
-                }
-            })
-        }
     }
 
     onAdicionarClickHandler(event: MouseEvent<HTMLButtonElement>) {
@@ -71,31 +65,19 @@ export default class RespostasList extends Component<RespostasListProps, Respost
             })
     }
 
-    onExcluirClickHandler(id) {
-        return () => {
-            axios
-                .delete('/respostas/delete/' + id)
-                .then((response: AxiosResponse<{ data: boolean }>) => {
-                    if (response.data.data) {
-                        this.loadRespostas()
-                    }
-                })
-        }
+    onEditarClickHandler(e: MouseEvent<HTMLButtonElement>) {
+        this.setState({ ...this.state, editing: true })
+    }
+
+    onExecutedHandler() {
+        this.loadRespostas()
     }
 
     render(): ReactNode {
         return (
             <>
                 {this.state.loading ? 'Carregando...' : this.state.respostas.length === 0 ? 'Não há respostas para essa enquete...' :
-                    this.state.respostas.map(resposta =>
-                        <div className="flex flex-row">
-                            <button key={resposta.id} className="cursor-pointer hover:bg-gray-100 py-2 flex-grow rounded" onClick={this.onClickHandler(resposta.id) }>
-                                {resposta.id}. {resposta.titulo} - {resposta.votos} voto(s).
-                            </button>
-
-                            <DeleteButton onDelete={this.onExcluirClickHandler(resposta.id)} />
-                        </div>
-                    )
+                    this.state.respostas.map(resposta => <RespostaItem key={resposta.id} resposta={resposta} onExtecuted={this.onExecutedHandler} />)
                 }
 
                 <form className="flex flex-row justify-center items-center">

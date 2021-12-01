@@ -21,10 +21,11 @@ Route::get('/', [ EnquetesUIController::class, 'index' ])->name('ui.enquetes.ind
 
 Route::get('/enquetes', [ EnqueteApiController::class, 'index'])->name('enquetes.index');
 Route::post('/enquetes/store', [ EnqueteApiController::class, 'store'])->name('enquetes.store');
-Route::patch('/enquetes/update/{enquete}', [ EnqueteApiController::class, 'update'])->name('enquetes.update');
+Route::patch('/enquetes/update', [ EnqueteApiController::class, 'update'])->name('enquetes.update');
 Route::delete('/enquetes/delete/{enquete}', [ EnqueteApiController::class, 'destroy'])->name('enquetes.delete');
 Route::post('/enquetes/add', [ EnqueteApiController::class, 'addResposta' ])->name('enquetes.add');
 
 Route::get('/respostas/get/{enquete}', [ RespostaApiController::class, 'get' ])->name('respostas.get');
 Route::patch('/respostas/vote', [ RespostaApiController::class, 'vote' ])->name('respostas.vote');
 Route::delete('/respostas/delete/{resposta}', [ RespostaApiController::class, 'delete' ])->name('respostas.delete');
+Route::patch('/respostas/update', [ RespostaApiController::class, 'update' ])->name('respostas.update');

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\RespostaUpdateRequest;
 use App\Http\Requests\RespostaVoteRequest;
 use App\Models\Enquete;
 use App\Models\Resposta;
@@ -67,5 +68,16 @@ class RespostaApiController extends Controller
                 ]
             );
         }
+    }
+
+    public function update(RespostaUpdateRequest $request)
+    {
+        Resposta::where('id', $request->safe()['id'])->update($request->safe([ 'titulo' ]));
+
+        return Response::json(
+            [
+                'data' => true,
+            ]
+        );
     }
 }

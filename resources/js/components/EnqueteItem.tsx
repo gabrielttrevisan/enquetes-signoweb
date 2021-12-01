@@ -1,7 +1,10 @@
 import axios, { AxiosResponse } from "axios";
 import { Component, ReactNode, MouseEvent } from "react"
 import DeleteButton from "./DeleteButton";
+import EditButton from "./EditButton";
+import EditEnqueteForm from "./EditEnqueteForm";
 import Enquete from "./Enquete";
+import Modal from "./Modal";
 import RespostasList from "./RespostasList";
 import { dateMask } from "./utils";
 
@@ -9,10 +12,12 @@ interface EnqueteItemProps {
     enquete: Enquete
     onVoted: () => void
     onDelete: () => void
+    onEdited: () => void
 }
 
 interface EnqueteItemState {
     expanded: boolean
+    show: boolean
 }
 
 export default class EnqueteItem extends Component<EnqueteItemProps, EnqueteItemState> {
@@ -20,8 +25,11 @@ export default class EnqueteItem extends Component<EnqueteItemProps, EnqueteItem
         super(props);
         this.state = {
             expanded: false,
+            show: false,
         }
         this.onClickHandler = this.onClickHandler.bind(this)
+        this.onEditarClickedHandler = this.onEditarClickedHandler.bind(this)
+        this.onRequestClose = this.onRequestClose.bind(this)
     }
 
     onClickHandler(event: MouseEvent<HTMLDivElement>) {
@@ -40,9 +48,20 @@ export default class EnqueteItem extends Component<EnqueteItemProps, EnqueteItem
         }
     }
 
+    onEditarClickedHandler(e: MouseEvent<HTMLButtonElement>) {
+        this.setState({ ...this.state, show: true })
+    }
+
+    onRequestClose() {
+        this.setState({ ...this.state, show: false })
+    }
+
     render(): ReactNode {
         return (
             <li className="flex flex-col p-2 hover:bg-white">
+                <Modal show={this.state.show} onRequestClose={this.onRequestClose}>
+                    <EditEnqueteForm enquete={this.props.enquete} onEdited={this.props.onEdited} />
+                </Modal>
                 <div className="flex flex-row justify-center items-center transition-all hover:scale-110 transform gap-4" role='button'>
                     <div className="flex flex-col"  onClick={this.onClickHandler}>
                         <div className="text-lg">
@@ -63,6 +82,8 @@ export default class EnqueteItem extends Component<EnqueteItemProps, EnqueteItem
                     </div>
 
                     <DeleteButton onDelete={this.onDeleteClickHandler(this.props.enquete.id)} />
+
+                    <EditButton onEdit={this.onEditarClickedHandler} />
                 </div>
 
                 <div className={`transition-all overflow-hidden flex flex-col ${this.state.expanded ? 'h-auto py-4' : 'h-0 p-0'}`}>

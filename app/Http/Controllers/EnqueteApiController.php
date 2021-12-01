@@ -33,9 +33,9 @@ class EnqueteApiController extends Controller
      * @param EnqueteUpdateRequest $request
      * @return \Symfony\Component\HttpFoundation\Response
      */
-    public function update(Enquete $enquete, EnqueteUpdateRequest $request)
+    public function update(EnqueteUpdateRequest $request)
     {
-        $enquete->update($request->safe()->all());
+        Enquete::where('id', $request->safe(['id'])['id'])->update($request->safe([ 'titulo', 'fim', 'inicio' ]));
 
         return Response::json([
             'data' => true,

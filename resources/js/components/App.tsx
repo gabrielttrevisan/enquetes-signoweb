@@ -27,6 +27,7 @@ class App extends Component<AppProps, AppState> {
         this.loadEnquetes = this.loadEnquetes.bind(this)
         this.onVoted = this.onVoted.bind(this)
         this.onDelete = this.onDelete.bind(this)
+        this.onEdited = this.onEdited.bind(this)
     }
 
     loadEnquetes() {
@@ -55,6 +56,10 @@ class App extends Component<AppProps, AppState> {
         this.loadEnquetes()
     }
 
+    onEdited() {
+        this.loadEnquetes()
+    }
+
     render(): ReactNode {
         return (
             <Card>
@@ -64,7 +69,7 @@ class App extends Component<AppProps, AppState> {
 
                 <NewEnqueteForm onAdded={this.onAddedHandler} />
 
-                <EnqueteList enquetes={this.state.enquetes} loading={this.state.loading} onVoted={this.onVoted} onDelete={this.onDelete} />
+                <EnqueteList enquetes={this.state.enquetes} loading={this.state.loading} onVoted={this.onVoted} onDelete={this.onDelete} onEdited={this.onEdited} />
             </Card>
         );
     }
