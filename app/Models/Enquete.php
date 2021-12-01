@@ -28,7 +28,7 @@ class Enquete extends Model
 
         static::deleting(function ($enquete)
             {
-                foreach ($enquete->respostas() as $resposta)
+                foreach ($enquete->respostas()->get() as $resposta)
                 {
                     $resposta->delete();
                 }
