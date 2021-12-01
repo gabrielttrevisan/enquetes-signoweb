@@ -6,6 +6,7 @@ interface EnqueteListProps {
     enquetes: Enquete[]
     loading: boolean
     onVoted: () => void
+    onDelete: () => void
 }
 
 export default class EnqueteList extends Component<EnqueteListProps> {
@@ -16,7 +17,7 @@ export default class EnqueteList extends Component<EnqueteListProps> {
     render(): ReactNode {
         return (
             <ul className="py-4">
-                {this.props.loading ? 'Carregando...' : this.props.enquetes.length > 0 ? this.props.enquetes.map(enquete => <EnqueteItem key={enquete.id} enquete={enquete} onVoted={this.props.onVoted} />) : 'Nenhuma enquete cadastrada...'}
+                {this.props.loading ? 'Carregando...' : this.props.enquetes.length > 0 ? this.props.enquetes.map(enquete => <EnqueteItem key={enquete.id} enquete={enquete} onVoted={this.props.onVoted} onDelete={this.props.onDelete} />) : 'Nenhuma enquete cadastrada...'}
             </ul>
         );
     }

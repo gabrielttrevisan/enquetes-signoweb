@@ -1,4 +1,4 @@
-import { Component, createRef, FormEvent, MouseEvent, ReactNode, RefObject } from "react"
+import { ChangeEvent, Component, createRef, FormEvent, MouseEvent, ReactNode, RefObject } from "react"
 import { CsrfInput } from "./CsrfInput"
 import LabeledInput from "./LabeledInput"
 import FancyButton from "./FancyButton"
@@ -14,9 +14,9 @@ interface NewEnqueteFormState {
     titulo: string
     inicio: string
     fim: string
-    resposta1: '',
-    resposta2: '',
-    resposta3: '',
+    resposta1: string
+    resposta2: string
+    resposta3: string
 }
 
 export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEnqueteFormState> {
@@ -94,7 +94,7 @@ export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEn
                     innerRef={this.tituloRef}
                     value={this.state.titulo}
                     className={inputClassNames}
-                    onChange={e => this.setState({ ...this.state, titulo: e.target.value})}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({ ...this.state, titulo: e.target.value})}
                 />
 
                 <LabeledInput
@@ -104,7 +104,7 @@ export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEn
                     innerRef={this.inicioRef}
                     value={this.state.inicio}
                     className={inputClassNames}
-                    onChange={e => this.setState({ ...this.state, inicio: e.target.value})}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({ ...this.state, inicio: e.target.value})}
                 />
 
                 <LabeledInput
@@ -114,7 +114,7 @@ export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEn
                     innerRef={this.fimRef}
                     value={this.state.fim}
                     className={inputClassNames}
-                    onChange={e => this.setState({ ...this.state, fim: e.target.value})}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({ ...this.state, fim: e.target.value})}
                 />
 
                 <LabeledInput
@@ -124,7 +124,7 @@ export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEn
                     innerRef={this.resposta1Ref}
                     className={inputClassNames}
                     value={this.state.resposta1}
-                    onChange={e => this.setState({ ...this.state, resposta1: e.target.value})}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({ ...this.state, resposta1: e.target.value})}
                 />
 
                 <LabeledInput
@@ -134,7 +134,7 @@ export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEn
                     innerRef={this.resposta2Ref}
                     value={this.state.resposta2}
                     className={inputClassNames}
-                    onChange={e => this.setState({ ...this.state, resposta2: e.target.value})}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({ ...this.state, resposta2: e.target.value})}
                 />
 
                 <LabeledInput
@@ -144,7 +144,7 @@ export default class NewEnqueteForm extends Component<NewEnqueteFormProps, NewEn
                     innerRef={this.resposta3Ref}
                     value={this.state.resposta3}
                     className={inputClassNames}
-                    onChange={e => this.setState({ ...this.state, resposta3: e.target.value})}
+                    onChange={(e: ChangeEvent<HTMLInputElement>) => this.setState({ ...this.state, resposta3: e.target.value})}
                 />
 
                 <FancyButton

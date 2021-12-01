@@ -1,4 +1,6 @@
+import axios, { AxiosResponse } from "axios";
 import { Component, ReactNode, MouseEvent } from "react"
+import DeleteButton from "./DeleteButton";
 import Enquete from "./Enquete";
 import RespostasList from "./RespostasList";
 import { dateMask } from "./utils";
@@ -6,6 +8,7 @@ import { dateMask } from "./utils";
 interface EnqueteItemProps {
     enquete: Enquete
     onVoted: () => void
+    onDelete: () => void
 }
 
 interface EnqueteItemState {
@@ -27,25 +30,39 @@ export default class EnqueteItem extends Component<EnqueteItemProps, EnqueteItem
         }
     }
 
+    onDeleteClickHandler(id: number) {
+        return () => {
+            axios.delete('/enquetes/delete/' + id).then((response: AxiosResponse<{ data: boolean }>) => {
+                if (response.data.data) {
+                    this.props.onDelete()
+                }
+            });
+        }
+    }
+
     render(): ReactNode {
         return (
             <li className="flex flex-col p-2 hover:bg-white">
-                <div className="flex flex-col transition-all hover:scale-110 transform" role='button' onClick={this.onClickHandler}>
-                    <div className="text-lg">
-                        {this.props.enquete.titulo}
-                    </div>
-
-                    <div className="flex flex-row justify-center items-center text-sm gap-2 text-gray-400">
-                        <div>
-                            <strong>Inicia em: </strong>
-                            <span>{dateMask(this.props.enquete.inicio)}</span>
+                <div className="flex flex-row justify-center items-center transition-all hover:scale-110 transform gap-4" role='button'>
+                    <div className="flex flex-col"  onClick={this.onClickHandler}>
+                        <div className="text-lg">
+                            {this.props.enquete.titulo}
                         </div>
 
-                        <div>
-                            <strong>Termina em: </strong>
-                            <span>{dateMask(this.props.enquete.fim)}</span>
+                        <div className="flex flex-row justify-center items-center text-sm gap-2 text-gray-400">
+                            <div>
+                                <strong>Inicia em: </strong>
+                                <span>{dateMask(this.props.enquete.inicio)}</span>
+                            </div>
+
+                            <div>
+                                <strong>Termina em: </strong>
+                                <span>{dateMask(this.props.enquete.fim)}</span>
+                            </div>
                         </div>
                     </div>
+
+                    <DeleteButton onDelete={this.onDeleteClickHandler(this.props.enquete.id)} />
                 </div>
 
                 <div className={`transition-all overflow-hidden flex flex-col ${this.state.expanded ? 'h-auto py-4' : 'h-0 p-0'}`}>

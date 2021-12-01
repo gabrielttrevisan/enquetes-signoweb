@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from "axios";
 import { Component, ReactNode, MouseEvent, createRef } from "react"
+import DeleteButton from "./DeleteButton";
 import { Resposta } from "./Enquete";
 import FancyButton from "./FancyButton";
 
@@ -92,9 +93,7 @@ export default class RespostasList extends Component<RespostasListProps, Respost
                                 {resposta.id}. {resposta.titulo} - {resposta.votos} voto(s).
                             </button>
 
-                            <button className="p-2 text-sm text-red-400 hover:bg-red-100 rounded" onClick={this.onExcluirClickHandler(resposta.id)}>
-                                Excluir
-                            </button>
+                            <DeleteButton onDelete={this.onExcluirClickHandler(resposta.id)} />
                         </div>
                     )
                 }

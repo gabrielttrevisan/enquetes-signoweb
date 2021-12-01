@@ -1,4 +1,4 @@
-import { Component, HTMLProps, RefObject, ReactNode, FormEventHandler, FormEvent } from "react"
+import { Component, HTMLProps, RefObject, ReactNode, FormEventHandler, FormEvent, ChangeEventHandler } from "react"
 
 interface LabeledInputProps extends HTMLProps<HTMLInputElement> {
     title: string

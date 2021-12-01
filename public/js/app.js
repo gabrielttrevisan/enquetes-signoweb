@@ -2159,6 +2159,7 @@ function (_super) {
     _this.onAddedHandler = _this.onAddedHandler.bind(_this);
     _this.loadEnquetes = _this.loadEnquetes.bind(_this);
     _this.onVoted = _this.onVoted.bind(_this);
+    _this.onDelete = _this.onDelete.bind(_this);
     return _this;
   }
 
@@ -2188,6 +2189,10 @@ function (_super) {
     this.loadEnquetes();
   };
 
+  App.prototype.onDelete = function () {
+    this.loadEnquetes();
+  };
+
   App.prototype.render = function () {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(_Card__WEBPACK_IMPORTED_MODULE_3__["default"], {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
@@ -2197,7 +2202,8 @@ function (_super) {
       }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EnqueteList__WEBPACK_IMPORTED_MODULE_5__["default"], {
         enquetes: this.state.enquetes,
         loading: this.state.loading,
-        onVoted: this.onVoted
+        onVoted: this.onVoted,
+        onDelete: this.onDelete
       }, void 0)]
     }, void 0);
   };
@@ -2366,6 +2372,91 @@ function (_super) {
 
 /***/ }),
 
+/***/ "./resources/js/components/DeleteButton.tsx":
+/*!**************************************************!*\
+  !*** ./resources/js/components/DeleteButton.tsx ***!
+  \**************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+var __extends = undefined && undefined.__extends || function () {
+  var _extendStatics = function extendStatics(d, b) {
+    _extendStatics = Object.setPrototypeOf || {
+      __proto__: []
+    } instanceof Array && function (d, b) {
+      d.__proto__ = b;
+    } || function (d, b) {
+      for (var p in b) {
+        if (Object.prototype.hasOwnProperty.call(b, p)) d[p] = b[p];
+      }
+    };
+
+    return _extendStatics(d, b);
+  };
+
+  return function (d, b) {
+    if (typeof b !== "function" && b !== null) throw new TypeError("Class extends value " + String(b) + " is not a constructor or null");
+
+    _extendStatics(d, b);
+
+    function __() {
+      this.constructor = d;
+    }
+
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+  };
+}();
+
+var __assign = undefined && undefined.__assign || function () {
+  __assign = Object.assign || function (t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+      s = arguments[i];
+
+      for (var p in s) {
+        if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+      }
+    }
+
+    return t;
+  };
+
+  return __assign.apply(this, arguments);
+};
+
+
+
+
+var DeleteButton =
+/** @class */
+function (_super) {
+  __extends(DeleteButton, _super);
+
+  function DeleteButton(props) {
+    return _super.call(this, props) || this;
+  }
+
+  DeleteButton.prototype.render = function () {
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", __assign({
+      className: "p-2 text-sm text-red-400 hover:bg-red-100 rounded",
+      onClick: this.props.onDelete
+    }, {
+      children: "Excluir"
+    }), void 0);
+  };
+
+  return DeleteButton;
+}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (DeleteButton);
+
+/***/ }),
+
 /***/ "./resources/js/components/EnqueteItem.tsx":
 /*!*************************************************!*\
   !*** ./resources/js/components/EnqueteItem.tsx ***!
@@ -2378,9 +2469,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _RespostasList__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./RespostasList */ "./resources/js/components/RespostasList.tsx");
-/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./utils */ "./resources/js/components/utils.ts");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _DeleteButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteButton */ "./resources/js/components/DeleteButton.tsx");
+/* harmony import */ var _RespostasList__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./RespostasList */ "./resources/js/components/RespostasList.tsx");
+/* harmony import */ var _utils__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./utils */ "./resources/js/components/utils.ts");
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -2430,6 +2524,8 @@ var __assign = undefined && undefined.__assign || function () {
 
 
 
+
+
 var EnqueteItem =
 /** @class */
 function (_super) {
@@ -2453,40 +2549,58 @@ function (_super) {
     }
   };
 
+  EnqueteItem.prototype.onDeleteClickHandler = function (id) {
+    var _this = this;
+
+    return function () {
+      axios__WEBPACK_IMPORTED_MODULE_1___default()["delete"]('/enquetes/delete/' + id).then(function (response) {
+        if (response.data.data) {
+          _this.props.onDelete();
+        }
+      });
+    };
+  };
+
   EnqueteItem.prototype.render = function () {
     return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("li", __assign({
       className: "flex flex-col p-2 hover:bg-white"
     }, {
       children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
-        className: "flex flex-col transition-all hover:scale-110 transform",
-        role: 'button',
-        onClick: this.onClickHandler
+        className: "flex flex-row justify-center items-center transition-all hover:scale-110 transform gap-4",
+        role: 'button'
       }, {
-        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
-          className: "text-lg"
+        children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
+          className: "flex flex-col",
+          onClick: this.onClickHandler
         }, {
-          children: this.props.enquete.titulo
-        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
-          className: "flex flex-row justify-center items-center text-sm gap-2 text-gray-400"
-        }, {
-          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
-              children: "Inicia em: "
-            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-              children: (0,_utils__WEBPACK_IMPORTED_MODULE_3__.dateMask)(this.props.enquete.inicio)
+          children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
+            className: "text-lg"
+          }, {
+            children: this.props.enquete.titulo
+          }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", __assign({
+            className: "flex flex-row justify-center items-center text-sm gap-2 text-gray-400"
+          }, {
+            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
+                children: "Inicia em: "
+              }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                children: (0,_utils__WEBPACK_IMPORTED_MODULE_5__.dateMask)(this.props.enquete.inicio)
+              }, void 0)]
+            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+              children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
+                children: "Termina em: "
+              }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
+                children: (0,_utils__WEBPACK_IMPORTED_MODULE_5__.dateMask)(this.props.enquete.fim)
+              }, void 0)]
             }, void 0)]
-          }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-            children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("strong", {
-              children: "Termina em: "
-            }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("span", {
-              children: (0,_utils__WEBPACK_IMPORTED_MODULE_3__.dateMask)(this.props.enquete.fim)
-            }, void 0)]
-          }, void 0)]
-        }), void 0)]
+          }), void 0)]
+        }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_DeleteButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+          onDelete: this.onDeleteClickHandler(this.props.enquete.id)
+        }, void 0)]
       }), void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
         className: "transition-all overflow-hidden flex flex-col ".concat(this.state.expanded ? 'h-auto py-4' : 'h-0 p-0')
       }, {
-        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RespostasList__WEBPACK_IMPORTED_MODULE_2__["default"], {
+        children: (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_RespostasList__WEBPACK_IMPORTED_MODULE_4__["default"], {
           enqueteId: this.props.enquete.id
         }, void 0)
       }), void 0)]
@@ -2494,7 +2608,7 @@ function (_super) {
   };
 
   return EnqueteItem;
-}(react__WEBPACK_IMPORTED_MODULE_1__.Component);
+}(react__WEBPACK_IMPORTED_MODULE_2__.Component);
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (EnqueteItem);
 
@@ -2580,7 +2694,8 @@ function (_super) {
       children: this.props.loading ? 'Carregando...' : this.props.enquetes.length > 0 ? this.props.enquetes.map(function (enquete) {
         return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_EnqueteItem__WEBPACK_IMPORTED_MODULE_2__["default"], {
           enquete: enquete,
-          onVoted: _this.props.onVoted
+          onVoted: _this.props.onVoted,
+          onDelete: _this.props.onDelete
         }, enquete.id);
       }) : 'Nenhuma enquete cadastrada...'
     }), void 0);
@@ -3044,7 +3159,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var _FancyButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./FancyButton */ "./resources/js/components/FancyButton.tsx");
+/* harmony import */ var _DeleteButton__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./DeleteButton */ "./resources/js/components/DeleteButton.tsx");
+/* harmony import */ var _FancyButton__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./FancyButton */ "./resources/js/components/FancyButton.tsx");
 var __extends = undefined && undefined.__extends || function () {
   var _extendStatics = function extendStatics(d, b) {
     _extendStatics = Object.setPrototypeOf || {
@@ -3088,6 +3204,7 @@ var __assign = undefined && undefined.__assign || function () {
 
   return __assign.apply(this, arguments);
 };
+
 
 
 
@@ -3192,12 +3309,9 @@ function (_super) {
             onClick: _this.onClickHandler(resposta.id)
           }, {
             children: [resposta.id, ". ", resposta.titulo, " - ", resposta.votos, " voto(s)."]
-          }), resposta.id), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", __assign({
-            className: "p-2 text-sm text-red-400 hover:bg-red-100 rounded",
-            onClick: _this.onExcluirClickHandler(resposta.id)
-          }, {
-            children: "Excluir"
-          }), void 0)]
+          }), resposta.id), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_DeleteButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+            onDelete: _this.onExcluirClickHandler(resposta.id)
+          }, void 0)]
         }), void 0);
       }), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", __assign({
         className: "flex flex-row justify-center items-center"
@@ -3214,7 +3328,7 @@ function (_super) {
               adicional: e.target.value
             }));
           }
-        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_FancyButton__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_FancyButton__WEBPACK_IMPORTED_MODULE_4__["default"], {
           type: "submit",
           value: "+ Resposta",
           onClick: this.onAdicionarClickHandler,
