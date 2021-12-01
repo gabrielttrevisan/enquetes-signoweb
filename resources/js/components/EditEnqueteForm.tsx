@@ -108,7 +108,7 @@ export default class EditEnqueteForm extends Component<EditEnqueteFormProps, Edi
                     type='submit'
                     onClick={this.onClickHandler}
                     loading={this.state.loading}
-                    value='Criar Enquete'
+                    value='Atualizar Enquete'
                 />
             </form>
         );

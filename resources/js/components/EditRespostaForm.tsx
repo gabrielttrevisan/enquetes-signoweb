@@ -80,7 +80,7 @@ export default class EditRespotstaForm extends Component<EditRespotstaFormProps,
                     type='submit'
                     onClick={this.onClickHandler}
                     loading={this.state.loading}
-                    value='Criar Enquete'
+                    value='Atualizar Resposta'
                 />
             </form>
         );

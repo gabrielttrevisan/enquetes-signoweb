@@ -2726,7 +2726,7 @@ function (_super) {
         type: 'submit',
         onClick: this.onClickHandler,
         loading: this.state.loading,
-        value: 'Criar Enquete'
+        value: 'Atualizar Enquete'
       }, void 0)]
     }), void 0);
   };
@@ -2884,7 +2884,7 @@ function (_super) {
         type: 'submit',
         onClick: this.onClickHandler,
         loading: this.state.loading,
-        value: 'Criar Enquete'
+        value: 'Atualizar Resposta'
       }, void 0)]
     }), void 0);
   };
