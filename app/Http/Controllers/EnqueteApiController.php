@@ -35,7 +35,7 @@ class EnqueteApiController extends Controller
      */
     public function update(EnqueteUpdateRequest $request)
     {
-        Enquete::where('id', $request->safe(['id'])['id'])->update($request->safe([ 'titulo', 'fim', 'inicio' ]));
+        Enquete::where('id', $request->safe()['id'])->update($request->safe([ 'titulo', 'fim', 'inicio' ]));
 
         return Response::json([
             'data' => true,
@@ -54,17 +54,17 @@ class EnqueteApiController extends Controller
 
         Resposta::create([
             'enquete_id' => $created->id,
-            'titulo' => $request->safe([ 'resposta1' ])['resposta1'],
+            'titulo' => $request->safe()['resposta1'],
         ]);
 
         Resposta::create([
             'enquete_id' => $created->id,
-            'titulo' => $request->safe([ 'resposta2' ])['resposta2'],
+            'titulo' => $request->safe()['resposta2'],
         ]);
 
         Resposta::create([
             'enquete_id' => $created->id,
-            'titulo' => $request->safe([ 'resposta3' ])['resposta3'],
+            'titulo' => $request->safe()['resposta3'],
         ]);
 
         return Response::json(
