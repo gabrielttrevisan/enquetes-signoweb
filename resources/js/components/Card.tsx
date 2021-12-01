@@ -7,8 +7,23 @@ export default class Card extends Component {
 
     render(): ReactNode {
         return (
-            <div style={{ maxWidth: '70vw' }} className="px-6 my-0 mx-auto bg-green-50 text-center">
-                {this.props.children}
+            <div>
+                <style>
+                    {`
+                        .w-70-screen {
+                            width: 70vw;
+                        }
+
+                        @media (max-width: 800px) {
+                            .w-70-screen {
+                                width: 100vw;
+                            }
+                        }
+                    `}
+                </style>
+                <div className="px-6 my-0 mx-auto bg-green-50 text-center w-70-screen">
+                    {this.props.children}
+                </div>
             </div>
         );
     }

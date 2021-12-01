@@ -2291,14 +2291,15 @@ function (_super) {
   }
 
   Card.prototype.render = function () {
-    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
-      style: {
-        maxWidth: '70vw'
-      },
-      className: "px-6 my-0 mx-auto bg-green-50 text-center"
-    }, {
-      children: this.props.children
-    }), void 0);
+    return (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+      children: [(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("style", {
+        children: "\n                        .w-70-screen {\n                            width: 70vw;\n                        }\n\n                        @media (max-width: 800px) {\n                            .w-70-screen {\n                                width: 100vw;\n                            }\n                        }\n                    "
+      }, void 0), (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", __assign({
+        className: "px-6 my-0 mx-auto bg-green-50 text-center w-70-screen"
+      }, {
+        children: this.props.children
+      }), void 0)]
+    }, void 0);
   };
 
   return Card;
